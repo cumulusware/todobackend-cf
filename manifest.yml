@@ -1,0 +1,8 @@
+---
+applications:
+- name: TodoBackendCF
+  random-route: true
+  memory: 128M
+  env:
+    GOVERSION: go1.12
+    GOPACKAGENAME: github.com/cumulusware/todobackend-cf
