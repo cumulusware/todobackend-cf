@@ -7,4 +7,5 @@ func AddRoutes(r *mux.Router, uri string) {
 	s := r.PathPrefix(uri).Subrouter()
 	s.HandleFunc("/", DescribeAll()).Methods("OPTIONS")
 	s.HandleFunc("/{key}", Describe()).Methods("OPTIONS")
+	s.HandleFunc("/", ReadAll()).Methods("GET")
 }

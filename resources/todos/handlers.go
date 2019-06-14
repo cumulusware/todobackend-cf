@@ -19,3 +19,15 @@ func Describe() http.HandlerFunc {
 		helpers.RespondWithOptions(w, "GET,PATCH,DELETE,OPTIONS")
 	}
 }
+
+// ReadAll handles the GET method to list all todos.
+func ReadAll() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		todo := struct {
+			Title string `json:"title"`
+		}{
+			Title: "First task",
+		}
+		helpers.RespondWithJSON(w, http.StatusOK, todo)
+	}
+}
