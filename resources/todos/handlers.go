@@ -31,3 +31,15 @@ func ReadAll() http.HandlerFunc {
 		helpers.RespondWithJSON(w, http.StatusOK, todo)
 	}
 }
+
+// Create handles the POST method to create a new todo.
+func Create() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		todo := struct {
+			Title string `json:"title"`
+		}{
+			Title: "a todo",
+		}
+		helpers.RespondWithJSON(w, http.StatusOK, todo)
+	}
+}
