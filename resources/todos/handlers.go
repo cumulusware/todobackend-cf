@@ -43,3 +43,10 @@ func Create() http.HandlerFunc {
 		helpers.RespondWithJSON(w, http.StatusOK, todo)
 	}
 }
+
+// DeleteAll handles the DELETE method to delete all todos.
+func DeleteAll() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		helpers.RespondWithJSON(w, http.StatusNoContent, "")
+	}
+}
