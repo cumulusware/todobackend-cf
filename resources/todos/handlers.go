@@ -23,12 +23,7 @@ func Describe() http.HandlerFunc {
 // ReadAll handles the GET method to list all todos.
 func ReadAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		todo := struct {
-			Title string `json:"title"`
-		}{
-			Title: "First task",
-		}
-		helpers.RespondWithJSON(w, http.StatusOK, todo)
+		helpers.RespondWithJSON(w, http.StatusOK, todos)
 	}
 }
 
@@ -47,6 +42,7 @@ func Create() http.HandlerFunc {
 // DeleteAll handles the DELETE method to delete all todos.
 func DeleteAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		helpers.RespondWithJSON(w, http.StatusNoContent, "")
+		todos = []Todo{}
+		helpers.RespondWithJSON(w, http.StatusNoContent, todos)
 	}
 }
