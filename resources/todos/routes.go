@@ -11,4 +11,5 @@ func AddRoutes(r *mux.Router, ds DataStore, uri string) {
 	s.HandleFunc("/", DeleteAll(ds)).Methods("DELETE")
 	s.HandleFunc("/{key}", Describe()).Methods("OPTIONS")
 	s.HandleFunc("/{key}", Read(ds)).Methods("GET")
+	s.HandleFunc("/{key}", Update(ds)).Methods("PATCH")
 }

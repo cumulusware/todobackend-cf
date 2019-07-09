@@ -123,9 +123,41 @@ func (ds *DataStore) DeleteAll() error {
 	return err
 }
 
+// UpdateByID delets one todo found in the DataStore.
+func (ds *DataStore) UpdateByID(id string, todo *todos.Todo) error {
+	// Need the revision of the doc in order to update.
+	rev, err := ds.getRev(id)
+	if err != nil {
+		return err
+	}
+	doc := convertTodoToDoc(todo)
+	doc.ID = id
+	doc.Rev = rev
+	_, err = ds.DB.Put(ds.ctx, id, doc)
+	if err != nil {
+		return fmt.Errorf("error putting doc ID %s: %s", id, err)
+	}
+	return nil
+}
+
+func (ds *DataStore) getRev(id string) (string, error) {
+	rev, err := ds.DB.Rev(ds.ctx, id)
+	if err != nil {
+		return "", fmt.Errorf("error getting rev of doc id %s: %s", id, err)
+	}
+	return rev, nil
+}
+
 func convertDocToTodo(doc todoDoc) todos.Todo {
 	return todos.Todo{
 		Title:     doc.Title,
 		Completed: doc.Completed,
+	}
+}
+
+func convertTodoToDoc(todo *todos.Todo) todoDoc {
+	return todoDoc{
+		Title:     todo.Title,
+		Completed: todo.Completed,
 	}
 }
