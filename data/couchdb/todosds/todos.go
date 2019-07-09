@@ -73,6 +73,7 @@ func (ds *DataStore) GetAll(baseURL string) ([]todos.Todo, error) {
 			return todos, fmt.Errorf("error scanning doc: %s", err)
 		}
 		todo := convertDocToTodo(doc)
+		todo.URL = baseURL + doc.ID
 		todos = append(todos, todo)
 	}
 
