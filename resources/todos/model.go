@@ -5,4 +5,5 @@ type Todo struct {
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
 	URL       string `json:"url"`
+	Order     int    `json:"order"`
 }

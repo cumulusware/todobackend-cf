@@ -47,6 +47,7 @@ type todoDoc struct {
 	Deleted   bool   `json:"_deleted,omitempty"`
 	Title     string `json:"title"`
 	Completed bool   `json:"completed"`
+	Order     int    `json:"order"`
 }
 
 // Create stores a new todo in the DataStore.
