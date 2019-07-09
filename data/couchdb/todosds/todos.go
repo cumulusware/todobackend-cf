@@ -123,6 +123,20 @@ func (ds *DataStore) DeleteAll() error {
 	return err
 }
 
+// DeleteByID delets one todo found in the DataStore.
+func (ds *DataStore) DeleteByID(id string) error {
+	// Need the revision of the doc in order to delete.
+	rev, err := ds.getRev(id)
+	if err != nil {
+		return err
+	}
+	_, err = ds.DB.Delete(ds.ctx, id, rev, nil)
+	if err != nil {
+		return fmt.Errorf("error deleting doc ID %s rev %s: %s", id, rev, err)
+	}
+	return nil
+}
+
 // UpdateByID delets one todo found in the DataStore.
 func (ds *DataStore) UpdateByID(id string, todo *todos.Todo) error {
 	// Need the revision of the doc in order to update.

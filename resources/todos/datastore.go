@@ -7,4 +7,5 @@ type DataStore interface {
 	GetByID(id, url string) (Todo, error)
 	UpdateByID(id string, todo *Todo) error
 	DeleteAll() error
+	DeleteByID(id string) error
 }

@@ -85,6 +85,18 @@ func DeleteAll(ds DataStore) http.HandlerFunc {
 	}
 }
 
+// Delete handles the DELETE method to delete a todo.
+func Delete(ds DataStore) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := path.Base(r.URL.Path)
+		if err := ds.DeleteByID(id); err != nil {
+			helpers.RespondWithError(w, http.StatusNotFound, err.Error())
+			return
+		}
+		helpers.RespondWithJSON(w, http.StatusNoContent, "")
+	}
+}
+
 // Update handles the PATCH method to update a portion of a todo.
 func Update(ds DataStore) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
