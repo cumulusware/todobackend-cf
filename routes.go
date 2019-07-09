@@ -1,14 +1,15 @@
 package main
 
 import (
+	"github.com/cumulusware/todobackend-cf/data/couchdb"
 	"github.com/cumulusware/todobackend-cf/resources/todos"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
 
-func createRoutes() *mux.Router {
+func createRoutes(ds *couchdb.Store) *mux.Router {
 	r := mux.NewRouter().StrictSlash(true)
-	todos.AddRoutes(r, "/api/todos")
+	todos.AddRoutes(r, ds.Todos, "/api/todos")
 	return r
 }
 

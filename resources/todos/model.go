@@ -1,10 +1,8 @@
 package todos
 
-var todos = []Todo{
-	{"First task"},
-}
-
 // Todo models a todo for the TodoBackend.
 type Todo struct {
-	Title string `json:"title"`
+	Title     string `json:"title"`
+	Completed bool   `json:"completed"`
+	URL       string `json:"url"`
 }
