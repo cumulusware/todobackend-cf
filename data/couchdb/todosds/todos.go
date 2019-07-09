@@ -167,6 +167,7 @@ func convertDocToTodo(doc todoDoc) todos.Todo {
 	return todos.Todo{
 		Title:     doc.Title,
 		Completed: doc.Completed,
+		Order:     doc.Order,
 	}
 }
 
@@ -174,5 +175,6 @@ func convertTodoToDoc(todo *todos.Todo) todoDoc {
 	return todoDoc{
 		Title:     todo.Title,
 		Completed: todo.Completed,
+		Order:     todo.Order,
 	}
 }
