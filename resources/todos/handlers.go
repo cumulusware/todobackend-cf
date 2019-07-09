@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"path"
 
 	"github.com/cumulusware/todobackend-cf/helpers"
 )
@@ -32,6 +33,20 @@ func ReadAll(ds DataStore) http.HandlerFunc {
 			return
 		}
 		helpers.RespondWithJSON(w, http.StatusOK, todos)
+	}
+}
+
+// Read handles the GET method to list all todos.
+func Read(ds DataStore) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		id := path.Base(r.URL.Path)
+		url := createURL(r)
+		todo, err := ds.GetByID(id, url)
+		if err != nil {
+			helpers.RespondWithError(w, http.StatusInternalServerError, err.Error())
+			return
+		}
+		helpers.RespondWithJSON(w, http.StatusOK, todo)
 	}
 }
 

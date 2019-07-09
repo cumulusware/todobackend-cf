@@ -79,10 +79,21 @@ func (ds *DataStore) GetAll(baseURL string) ([]todos.Todo, error) {
 	return todos, nil
 }
 
-func convertDocToTodo(doc todoDoc) todos.Todo {
-	return todos.Todo{
-		Title: doc.Title,
+// GetByID returns one todo found in the DataStore.
+func (ds *DataStore) GetByID(id, url string) (todos.Todo, error) {
+	var todo todos.Todo
+	row, err := ds.DB.Get(ds.ctx, id, nil)
+	if err != nil {
+		return todo, fmt.Errorf("error getting doc with ID %s: %s", id, err)
 	}
+	var doc todoDoc
+	if err := row.ScanDoc(&doc); err != nil {
+		return todo, fmt.Errorf("error scanning doc: %s", err)
+	}
+	todo = convertDocToTodo(doc)
+	todo.URL = url
+
+	return todo, nil
 }
 
 // DeleteAll deletes all todos in the DataStore.
@@ -109,4 +120,11 @@ func (ds *DataStore) DeleteAll() error {
 	time.Sleep(300 * time.Millisecond) // Added for IBM Cloud rate limit on lite plan.
 	_, err = ds.DB.BulkDocs(ds.ctx, docs, nil)
 	return err
+}
+
+func convertDocToTodo(doc todoDoc) todos.Todo {
+	return todos.Todo{
+		Title:     doc.Title,
+		Completed: doc.Completed,
+	}
 }
