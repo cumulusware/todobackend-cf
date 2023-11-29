@@ -29,4 +29,5 @@ dev: local
 deploy:
 	go mod tidy
 	go mod vendor
+	ibmcloud target --cf -o TodoBackendOrg -s dev
 	ibmcloud cf push -b "https://github.com/cloudfoundry/go-buildpack.git#v1.8.40" -f manifest.yml

@@ -138,7 +138,7 @@ func (ds *DataStore) DeleteByID(id string) error {
 	return nil
 }
 
-// UpdateByID delets one todo found in the DataStore.
+// UpdateByID updates one todo found in the DataStore.
 func (ds *DataStore) UpdateByID(id string, todo *todos.Todo) error {
 	// Need the revision of the doc in order to update.
 	rev, err := ds.getRev(id)
